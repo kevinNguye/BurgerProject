@@ -27,3 +27,15 @@
     background-color: #ccc;
 
 }
+
+.Invalid {
+    border: 3px solid red;
+    
+}
+
+.ValidationError {
+    color: red;
+    margin: 5px 0;
+    text-transform: capitalize;
+    font-weight: bold;
+}
