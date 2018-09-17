@@ -2,31 +2,10 @@ import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import { Route } from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
+import { connect } from 'react-redux';
 
 class Checkout extends Component {
 
-        state = {
-            ingredients: null,
-            price: 0
-        }
-
-        componentWillMount () {
-            const queryParams = new URLSearchParams(this.props.location.search);
-            const ingredients = {};
-            let price = 0;
-            for(let param of queryParams) {
-                if(param[0] === 'price') {
-                    price = param[1];
-                } else {
-                    ingredients[param[0]] = param[1];
-                }
-               
-            }
-            this.setState({
-                ingredients: ingredients,
-                price: price
-            });
-        }
 
         cancelledClickedHandler = () => {
             this.props.history.goBack();
@@ -40,16 +19,22 @@ class Checkout extends Component {
             return (
                 <div>
                     <CheckoutSummary
-                        ingredients={this.state.ingredients}
+                        ingredients={this.props.ingredients}
                         cancelled={this.cancelledClickedHandler}
                         continued={this.continueClickedHandler}/>
                     <Route
                         path={this.props.match.path + '/contact-data'}
-                        render={() => (<ContactData ingredients={this.state.ingredients} totalPrice={this.state.price} {...this.props}/>)}/>
+                        component={ContactData} />
                 </div>
             );
         }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        ingredients: state.ingredients
+    }
+};
 
-export default Checkout;
+
+export default connect(mapStateToProps)(Checkout);

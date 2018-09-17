@@ -12,7 +12,6 @@ const input = ( props ) => {
         validationError = <p className={classes.ValidationError}>Please Enter a Valid {props.valueType}!</p>;
     }
 
-``
     switch(props.elementType) {
         case('input'):
             inputElement = <input
