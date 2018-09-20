@@ -20,7 +20,7 @@ export const removeIngredients = (ingName) => {
 export const setIngredients = ( ingredients ) => {
      return {
          type: actionTypes.SET_INGREDIENTS,
-         ingredients: ingredients 
+         ingredients: ingredients
      }
 };
 
@@ -30,6 +30,13 @@ export const fetchIngredientsFailed = () => {
     };
 };
 
+
+export const setPrice = ( initialPrice ) => {
+    return {
+        type: actionTypes.SET_PRICE,
+        price: initialPrice
+    };
+};
 
 /**
  *  Load this initially to retrieve ingredients from server
@@ -42,6 +49,18 @@ export const initIngredients = () => {
             })
             .catch(error => {
                 dispatch(fetchIngredientsFailed);
+            });
+    };
+};
+
+export const initPrice = () => {
+    return ( dispatch ) => {
+        axios.get('initialPrice.json')
+            .then((response) => {
+                dispatch(setPrice(response.data));
+            })
+            .catch((error) => {
+                console.log("error" + error);
             });
     };
 };
